@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangla Caption Box - Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <h2>🇧🇩 ক্যাপশন এডমিন</h2>
+            </div>
+            <nav class="menu">
+                <button class="nav-btn active" onclick="switchTab('captions-tab')"><i class="fa-solid fa-quote-left"></i> ক্যাপশন ম্যানেজমেন্ট</button>
+                <button class="nav-btn" onclick="switchTab('categories-tab')"><i class="fa-solid fa-list"></i> ক্যাটাগরি ম্যানেজমেন্ট</button>
+                <button class="nav-btn" onclick="switchTab('updates-tab')"><i class="fa-solid fa-download"></i> অ্যাপ আপডেট কন্ট্রোল</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+
+            <!-- Captions Tab -->
+            <section id="captions-tab" class="tab-content active">
+                <header class="section-header">
+                    <h2>ক্যাপশন যোগ ও পরিচালনা করুন</h2>
+                </header>
+
+                <div class="card">
+                    <form id="captionForm">
+                        <input type="hidden" id="editCaptionId">
+                        <div class="form-group">
+                            <label for="categorySelect">ক্যাটাগরি সিলেক্ট করুন:</label>
+                            <select id="categorySelect" required>
+                                <option value="">ক্যাটাগরি লোড হচ্ছে...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="captionText">ক্যাপশন টেক্সট:</label>
+                            <textarea id="captionText" rows="4" placeholder="এখানে ক্যাপশন লিখুন..." required></textarea>
+                        </div>
+                        <button type="submit" id="saveCaptionBtn" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> ক্যাপশন সেভ করুন</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3>সকল ক্যাপশন তালিকা</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ক্যাপশন</th>
+                                    <th>ক্যাটাগরি ID</th>
+                                    <th>স্ট্যাটাস</th>
+                                    <th>অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody id="captionsTableBody">
+                                <tr><td colspan="4">ডেটা লোড হচ্ছে...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Tab -->
+            <section id="categories-tab" class="tab-content">
+                <header class="section-header">
+                    <h2>নতুন ক্যাটাগরি তৈরি করুন</h2>
+                </header>
+
+                <div class="card">
+                    <form id="categoryForm">
+                        <div class="form-group">
+                            <label for="categoryName">ক্যাটাগরির নাম (ইমোজি সহ):</label>
+                            <input type="text" id="categoryName" placeholder="যেমন: ❤️ ভালোবাসা" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> ক্যাটাগরি যোগ করুন</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3>বর্তমান ক্যাটাগরি সমূহ</h3>
+                    <ul id="categoryList" class="category-list">
+                        <li>লোডিং...</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- App Updates Tab -->
+            <section id="updates-tab" class="tab-content">
+                <header class="section-header">
+                    <h2>ইন-অ্যাপ আপডেট সেটআপ (GitHub Link)</h2>
+                </header>
+
+                <div class="card">
+                    <form id="updateConfigForm">
+                        <div class="form-group">
+                            <label for="latestVersionCode">সর্বশেষ ভার্সন কোড (Version Code):</label>
+                            <input type="number" id="latestVersionCode" placeholder="যেমন: 2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="latestVersionName">ভার্সন নাম (Version Name):</label>
+                            <input type="text" id="latestVersionName" placeholder="যেমন: v1.1.0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apkDownloadUrl">GitHub APK ডাউনলোড লিংক:</label>
+                            <input type="url" id="apkDownloadUrl" placeholder="https://github.com/..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="releaseNotes">আপডেট নোট (Release Notes):</label>
+                            <textarea id="releaseNotes" rows="3" placeholder="নতুন কী কী যোগ করা হয়েছে..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> আপডেট কনফিগ সেভ করুন</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Firebase SDK (Modular/v9 compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
